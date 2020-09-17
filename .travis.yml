@@ -1,0 +1,21 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t harroshan/docker-react -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true harroshan/docker-react npm run test -- --coverage
+  
+after_success:
+  - docker build -t harroshan/multi-client ./client
+  - docker build -t harroshan/multi-server ./server
+  - docker build -t harroshan/multi-nginx ./nginx
+  - docker build -t harroshan/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push harroshan/docker-worker
+  - docker push harroshan/multi-client
+  - docker push harroshan/multi-nginx
+  - docker push harroshan/multi-server
