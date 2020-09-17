@@ -15,7 +15,7 @@ after_success:
   - docker build -t harroshan/multi-nginx ./nginx
   - docker build -t harroshan/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push harroshan/docker-worker
+  - docker push harroshan/multi-worker
   - docker push harroshan/multi-client
   - docker push harroshan/multi-nginx
   - docker push harroshan/multi-server
