@@ -40,6 +40,10 @@ app.get('/', (req, res) => {
   res.send('Hi');
 });
 
+app.get('/welcome',(request, response, next) =>{
+  response.send({"message":"Welcome to my app"});
+});
+
 app.get('/values/all', async (req, res) => {
   const values = await pgClient.query('SELECT * from values');
 
